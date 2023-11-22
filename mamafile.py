@@ -11,7 +11,7 @@ class netsnmp(mama.BuildTarget):
         self.netsnmp = self.gnu_project('net-snmp', '5.9.4',
             url='http://kratt.codefox.ee/linux/{{project}}.tar.gz',
             build_products=[
-                BuildProduct('{{installed}}/lib/libsnmp.a', None),
+                BuildProduct('{{installed}}/lib/libnetsnmp.a', None),
             ])
 
     def settings(self):
@@ -26,8 +26,13 @@ class netsnmp(mama.BuildTarget):
             opts += '--disable-ipv6 --disable-embedded-perl --without-pcre '
             self.netsnmp.build(opts)
         else:
-            console('lib/libsnmp.a already built', color='green')
+            console('lib/libnetsnmp.a already built', color='green')
 
     def package(self):
         self.export_include('net-snmp-built/include', build_dir=True)
-        self.export_lib('net-snmp-built/lib/libsnmp.a', build_dir=True)
+        self.export_asset('net-snmp-built/bin/snmpget', category='bin', build_dir=True)
+        self.export_asset('net-snmp-built/bin/snmpset', category='bin', build_dir=True)
+
+        self.export_lib('net-snmp-built/lib/libnetsnmp.a', build_dir=True)
+        self.export_lib('net-snmp-built/lib/libnetsnmpmibs.a', build_dir=True)
+        self.export_lib('net-snmp-built/lib/libnetsnmphelpers.a', build_dir=True)
