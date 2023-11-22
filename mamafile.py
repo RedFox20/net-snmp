@@ -32,11 +32,13 @@ class netsnmp(mama.BuildTarget):
         if self.dep.can_fetch_artifactory(True, 'BUILD'):
             fetched, _ =  artifactory_fetch_and_reconfigure(self)
             if fetched:
-                console('lib/libnetsnmp.a already built', color='green')
+                console('lib/libnetsnmp.a already fetched', color='green')
+                return
 
         if self.netsnmp.should_build():
-            opts  = '--disable-shared --enable-static '
-            opts += '--disable-scripts --disable-manuals --disable-mibs '
+            opts  = '--disable-shared --enable-static --disable-snmpv1'
+            opts += '--disable-scripts --disable-manuals '
+            opts += '--disable-mibs --disable-mib-loading --with-mibdirs="/usr/opt/mibs:" '
             opts += '--disable-ipv6 --disable-embedded-perl --without-pcre '
             self.netsnmp.build(opts)
             self.netsnmp.deploy_all_products()
