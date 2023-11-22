@@ -32,6 +32,8 @@ class netsnmp(mama.BuildTarget):
         self.export_include('net-snmp-built/include', build_dir=True)
         self.export_asset('net-snmp-built/bin/snmpget', category='bin', build_dir=True)
         self.export_asset('net-snmp-built/bin/snmpset', category='bin', build_dir=True)
+        self.export_asset('net-snmp-built/bin/snmpwalk', category='bin', build_dir=True)
+        self.export_asset('net-snmp-built/bin/snmpbulkget', category='bin', build_dir=True)
 
         self.export_lib('net-snmp-built/lib/libnetsnmp.a', build_dir=True)
         self.export_lib('net-snmp-built/lib/libnetsnmpmibs.a', build_dir=True)
