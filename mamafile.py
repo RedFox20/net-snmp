@@ -36,10 +36,12 @@ class netsnmp(mama.BuildTarget):
                 return
 
         if self.netsnmp.should_build():
-            opts  = '--disable-shared --enable-static --disable-snmpv1'
+            opts  = '--disable-shared --enable-static --enable-minimalist --disable-snmpv1'
             opts += '--disable-scripts --disable-manuals '
             opts += '--disable-mibs --disable-mib-loading --with-mibdirs="/usr/opt/mibs:" '
             opts += '--disable-ipv6 --disable-embedded-perl --without-pcre '
+            # disable all the crypto stuff
+            opts += '--disable-des --disable-privacy --disable-md5 --with-openssl=no '
             self.netsnmp.build(opts)
             self.netsnmp.deploy_all_products()
         else:
